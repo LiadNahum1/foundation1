@@ -1,39 +1,89 @@
-import junit.framework.TestCase;
-import main.Bridge;
-import main.Driver;
-import main.ProxyBridge;
 import org.junit.*;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class SignProjectTest extends TestCase {
-    private Bridge bridge = new ProxyBridge();
-
-    protected void setUp() throws Exception{
-        super.setUp();
-        this.bridge = Driver.getBridge();
-    }
+public class SignProjectTest extends ProjectTest {
 
     @Test
-    void testSignProject()
+    public void testSignProject()
     {
         String studentId = "318841285";
         List<String> ids = new LinkedList<String>();
         ids.add("207912734");
-        ids.add("1111111");
-        ids.add("1234567");
+        ids.add("111111111");
+        ids.add("123456789");
+
         String nameMentor = "Mentor";
-        assertTrue(bridge.signProject(studentId, ids, nameMentor));
+        //test1 - all details are legal and all students are not signed to other project
+        assertNotSame(signProject(studentId, ids, nameMentor), -1);
 
-        ids.add("1111111");
-        assertFalse(bridge.signProject(studentId, ids, nameMentor));
+        /*test2 - all details are legal and all students are not signed to other project but
+        this time there are only 3 participants */
+        studentId = "222222222";
+        ids.clear();
+        ids.add("333333333");
+        ids.add("444444444");
+        assertNotSame(signProject(studentId, ids, nameMentor), -1);
 
-        ids.add("1234567");
-        assertFalse(bridge.signProject(studentId, ids, nameMentor));
+        //test3 - mentor "Mentor" is already mentor 4 projects
+        studentId = "987654321";
+        ids.clear();
+        ids.add("121212121");
+        ids.add("232323232");
+        ids.add("343434343");
+        signProject(studentId, ids, nameMentor);
 
+        studentId = "987654322";
+        ids.clear();
+        ids.add("121212122");
+        ids.add("232323233");
+        ids.add("343434344");
+        signProject(studentId, ids, nameMentor);
 
+        //four projects has signed to mentor "mentor"
+        studentId = "565656565";
+        ids.clear();
+        ids.add("111111112");
+        ids.add("111111113");
+        ids.add("111111114");
+        assertSame(signProject(studentId, ids, nameMentor), -1);
+
+        //test4 - student 565656565 already signed to another project
+        ids.clear();
+        ids.add("222222223");
+        ids.add("222222224");
+        ids.add("222222225");
+        nameMentor = "Mentor2";
+        assertSame(signProject(studentId, ids, nameMentor), -1);
+
+        //test5
+        //to short id
+        studentId = "207912444";
+        ids.clear();
+        ids.add("123213");
+        ids.add("111111222");
+        ids.add("123456788");
+        nameMentor = "MentorB";
+        assertSame(signProject(studentId,ids,nameMentor),-1);
+
+        //test6
+        //illegal mates id
+        studentId = "207912555";
+        ids.clear();
+        ids.add("djfh56788");
+        ids.add("123123129");
+        ids.add("123123789");
+        nameMentor = "MentorC";
+        assertSame(signProject(studentId,ids,nameMentor),-1);
     }
-
+  //  @Test
+    /*void testshowAvilableMentors()
+    {
+        //add project
+        int projectID = bridge.addProject("project", "Project for update", 90, "professor", "professor", "prof@post.bgu.ac.il"
+                , "0526144485", "BGU university");
+        assertSame(bridge.showAvilableMentors(projectID),)
+    }*/
 
 }
