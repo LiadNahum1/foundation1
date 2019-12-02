@@ -9,6 +9,14 @@ public class ProxyBridge implements Bridge {
         this.real = null;
     }
 
+    public boolean updateProject(int projectID, HashMap<String, String> valueToField)
+    {
+        if(this.real == null)
+            return false;
+        else
+            return real.updateProject(projectID, valueToField);
+    }
+
     public int addProject(String projectName, String description, int hours, String firstName, String lastName, String email, String phone, String organization)
     {
         if (this.real == null)
@@ -24,8 +32,6 @@ public class ProxyBridge implements Bridge {
             return real.signProject(studentId, ids, nameMentor);
     }
 
-    public boolean updateProject(int projectID, HashMap<String, String> valueToField) {
-        return false;
-    }
+
 }
 

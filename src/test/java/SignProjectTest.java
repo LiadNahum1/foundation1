@@ -18,7 +18,7 @@ public class SignProjectTest extends ProjectTest {
         //test1 - all details are legal and all students are not signed to other project
         assertNotSame(signProject(studentId, ids, nameMentor), -1);
 
-        /*test2 - all details are legal and all students are not signed to other project but
+        /* all details are legal and all students are not signed to other project but
         this time there are only 3 participants */
         studentId = "222222222";
         ids.clear();
@@ -26,7 +26,7 @@ public class SignProjectTest extends ProjectTest {
         ids.add("444444444");
         assertNotSame(signProject(studentId, ids, nameMentor), -1);
 
-        //test3 - mentor "Mentor" is already mentor 4 projects
+        //test2 - mentor "Mentor" is already mentor 4 projects
         studentId = "987654321";
         ids.clear();
         ids.add("121212121");
@@ -41,7 +41,7 @@ public class SignProjectTest extends ProjectTest {
         ids.add("343434344");
         signProject(studentId, ids, nameMentor);
 
-        //four projects has signed to mentor "mentor"
+        //four projects has signed to mentor "mentor" till now and this one will be the fifth
         studentId = "565656565";
         ids.clear();
         ids.add("111111112");
@@ -49,7 +49,7 @@ public class SignProjectTest extends ProjectTest {
         ids.add("111111114");
         assertSame(signProject(studentId, ids, nameMentor), -1);
 
-        //test4 - student 565656565 already signed to another project
+        //test3 - student 565656565 already signed to another project
         ids.clear();
         ids.add("222222223");
         ids.add("222222224");
@@ -57,8 +57,7 @@ public class SignProjectTest extends ProjectTest {
         nameMentor = "Mentor2";
         assertSame(signProject(studentId, ids, nameMentor), -1);
 
-        //test5
-        //to short id
+        //test4 - too short id
         studentId = "207912444";
         ids.clear();
         ids.add("123213");
@@ -67,8 +66,7 @@ public class SignProjectTest extends ProjectTest {
         nameMentor = "MentorB";
         assertSame(signProject(studentId,ids,nameMentor),-1);
 
-        //test6
-        //illegal mates id
+        //test5 - illegal mates id
         studentId = "207912555";
         ids.clear();
         ids.add("djfh56788");
@@ -76,14 +74,15 @@ public class SignProjectTest extends ProjectTest {
         ids.add("123123789");
         nameMentor = "MentorC";
         assertSame(signProject(studentId,ids,nameMentor),-1);
-    }
-  //  @Test
-    /*void testshowAvilableMentors()
-    {
-        //add project
-        int projectID = bridge.addProject("project", "Project for update", 90, "professor", "professor", "prof@post.bgu.ac.il"
-                , "0526144485", "BGU university");
-        assertSame(bridge.showAvilableMentors(projectID),)
-    }*/
 
+        //test6 - ids list is longer than 3
+        studentId = "565644444";
+        ids.clear();
+        ids.add("444111112");
+        ids.add("114441113");
+        ids.add("441111114");
+        ids.add("441111115");
+        nameMentor = "MentorD";
+        assertSame(signProject(studentId,ids,nameMentor),-1);
+    }
 }
