@@ -1,8 +1,6 @@
-import junit.framework.TestCase;
-import main.Bridge;
-import main.Driver;
+package main;
 
-import java.util.HashMap;
+import junit.framework.TestCase;
 import java.util.List;
 
 public class ProjectTest extends TestCase {
@@ -16,12 +14,16 @@ public class ProjectTest extends TestCase {
     public int addProject(String projectName, String description, int hours, String firstName, String lastName, String email, String phone, String organization) {
         return bridge.addProject(projectName, description, hours, firstName, lastName, email, phone, organization);
     }
-    public boolean updateProject(int projectID, HashMap<String,String> valueToField) {
-        return bridge.updateProject(projectID, valueToField);
+    public boolean deleteProject(int projectID){
+        return bridge.deleteProject(projectID);
     }
-
     public int signProject(String studentId, List<String> ids, String nameMentor){
         return bridge.signProject(studentId, ids, nameMentor);
+    }
+
+    public boolean unsignProject(int projectID)
+    {
+        return bridge.unsignProject(projectID);
     }
 }
 
